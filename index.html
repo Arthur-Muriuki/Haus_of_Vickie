@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css">
+  <title>Victor Kamau | Photographer</title>
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <div class="avatar"><img src="static/images/avatar.jpg" alt="Victor Kamau"></div>
+    <div class="meta">
+      <div class="name">Victor Kamau</div>
+      <div class="role">Photographer</div>
+      <div class="about-short">Light-led portraiture and cinematic storytelling. Based in Nairobi.</div>
+    </div>
+    <button class="close-btn" id="toggleSidebar" aria-label="Toggle sidebar">☰</button>
+  </aside>
+
+  <main id="mainContent">
+    <header class="topbar">
+      <div class="inner">
+        <div class="brand">VK • PHOTOGRAPHY</div>
+        <nav class="nav-links">
+          <a href="#hero">Home</a>
+          <a href="#about">About</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero" id="hero">
+      <div class="slides" id="slides">
+        <div class="slide active" data-index="0"><img src="static/images/photo1.jpg" alt="Photo 1"></div>
+        <div class="slide" data-index="1"><img src="static/images/photo2.jpg" alt="Photo 2"></div>
+        <div class="slide" data-index="2"><img src="static/images/photo3.jpg" alt="Photo 3"></div>
+        <div class="slide" data-index="3"><img src="static/images/photo4.jpg" alt="Photo 4"></div>
+        <div class="slide" data-index="4"><img src="static/images/photo5.jpg" alt="Photo 5"></div>
+      </div>
+
+      <div class="controls">
+        <button class="btn" id="prevBtn" aria-label="Previous"> 
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 18l-6-6 6-6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="btn" id="nextBtn" aria-label="Next">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 6l6 6-6 6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <div class="dots" id="dots"></div>
+
+      <div class="caption">
+        <h1>Victor Kamau</h1>
+        <p>Light is my language. I seek the story in a glance — portraits that breathe.</p>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <h2>About</h2>
+      <p>Victor Kamau is a storyteller with a lens, capturing shadows, light, and the quiet poetry between them. This space holds moments where time breathes and emotions unfold.</p>
+    </section>
+
+    <section class="section" id="gallery">
+      <h2>Featured</h2>
+      <div class="gallery-grid">
+        <img src="static/images/photo1.jpg" alt="featured 1">
+        <img src="static/images/photo2.jpg" alt="featured 2">
+        <img src="static/images/photo3.jpg" alt="featured 3">
+        <img src="static/images/photo4.jpg" alt="featured 4">
+        <img src="static/images/photo5.jpg" alt="featured 5">
+        <img src="static/images/photo6.jpg" alt="featured 6">
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <h2>Contact</h2>
+      <div class="contact-form">
+        <form action="/send" method="POST" id="contactForm">
+          <input type="text" name="name" placeholder="Your name" required>
+          <input type="email" name="email" placeholder="Your email" required>
+          <textarea name="message" rows="6" placeholder="Message" required></textarea>
+          <button type="submit">Send Message</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // SIDEBAR TOGGLE
+    const sidebar = document.getElementById('sidebar');
+    const toggle = document.getElementById('toggleSidebar');
+    const main = document.getElementById('mainContent');
+    toggle.addEventListener('click', ()=>{
+      const closed = sidebar.classList.toggle('closed');
+      main.classList.toggle('full', closed);
+    });
+
+    // SLIDESHOW (auto-play + manual + swipe)
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const dotsWrap = document.getElementById('dots');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    let index = 0;
+    let interval = null;
+    const AUTOPLAY_MS = 4500; // smooth, confident pace
+
+    function buildDots(){
+      slides.forEach((s,i)=>{
+        const d = document.createElement('div');d.className='dot';d.dataset.index=i;
+        d.addEventListener('click', ()=>goTo(i));
+        dotsWrap.appendChild(d);
+      })
+      updateDots();
+    }
+    function updateDots(){
+      Array.from(dotsWrap.children).forEach((d,i)=>d.classList.toggle('active', i===index));
+    }
+    function show(i){
+      slides.forEach(s=>s.classList.remove('active'));
+      slides[i].classList.add('active');
+      index=i;updateDots();
+    }
+    function next(){ show((index+1)%slides.length); }
+    function prev(){ show((index-1+slides.length)%slides.length); }
+    function goTo(i){ show(i); resetAutoplay(); }
+
+    nextBtn.addEventListener('click', ()=>{ next(); resetAutoplay(); });
+    prevBtn.addEventListener('click', ()=>{ prev(); resetAutoplay(); });
+
+    // keyboard
+    window.addEventListener('keydown', (e)=>{ if(e.key==='ArrowRight') next(); if(e.key==='ArrowLeft') prev(); });
+
+    // autoplay control
+    function startAutoplay(){ interval = setInterval(next, AUTOPLAY_MS); }
+    function stopAutoplay(){ clearInterval(interval); interval=null; }
+    function resetAutoplay(){ stopAutoplay(); startAutoplay(); }
+
+    // pause on hover
+    const hero = document.getElementById('hero');
+    hero.addEventListener('mouseenter', stopAutoplay);
+    hero.addEventListener('mouseleave', startAutoplay);
+
+    // touch swipe
+    let startX = 0; let endX = 0;
+    hero.addEventListener('touchstart', (e)=>{ startX = e.touches[0].clientX; });
+    hero.addEventListener('touchmove', (e)=>{ endX = e.touches[0].clientX; });
+    hero.addEventListener('touchend', ()=>{ if(!endX) return; const delta = endX - startX; if(Math.abs(delta) > 30){ if(delta < 0) next(); else prev(); } startX=endX=0; resetAutoplay(); });
+
+    // init
+    buildDots(); startAutoplay();
+
+    // Simple progressive image fallback: if image missing, hide the element (so layout doesn't break)
+    slides.forEach(s=>{
+      const img = s.querySelector('img');
+      img.addEventListener('error', ()=>{ s.style.display='none'; });
+    });
+
+    // Contact form UX: simple client-side feedback — backend handled by Flask route /send
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', (e)=>{
+      // Let it submit to the server; optionally disable button to prevent duplicate sends
+      const btn = form.querySelector('button'); btn.disabled = true; btn.textContent = 'Sending...';
+    });
+  </script>
+</body>
+</html>
