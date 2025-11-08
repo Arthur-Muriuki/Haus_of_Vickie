@@ -21,3 +21,14 @@ Contact Form – ready to integrate with a backend to send messages from visitor
 Fully responsive design, ensuring the site remains polished on smartphones, tablets and desktops.
 
 Clean separation of structure, style and behavior with HTML, external CSS and vanilla JavaScript.
+
+COPYRIGNT
+Copyright (c) 2025 victor kamau
+
+All rights reserved.
+
+This software and its source code are the property of Victor Kamau and are intended solely for internal use by authorized personnel or clients of the company. Unauthorized copying, distribution, modification, or use of this software, in whole or in part, is strictly prohibited.
+
+No part of this software may be reproduced, stored in a retrieval system, or transmitted in any form or by any means without prior written permission from Victor Kamau.
+
+For inquiries, contact: arthurmuriuki06@gmail.com
