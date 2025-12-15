@@ -3,25 +3,42 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="../static/css/style.css" />
   <title>Victor Kamau | Photographer</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static/css/style.css" />
 </head>
 <body>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
   <aside class="sidebar" id="sidebar">
-    <div class="avatar"><img src="static/images/avatar.jpg" alt="Victor Kamau"></div>
-    <div class="meta">
-      <div class="name">Victor Kamau</div>
-      <div class="role">Photographer</div>
-      <div class="about-short">Light-led portraiture and cinematic storytelling. Based in Nairobi.</div>
+    <div class="sidebar-inner">
+        <div class="avatar"><img src="static/images/avatar.jpg" alt="Victor Kamau"></div>
+        <div class="meta">
+            <div class="name">Victor Kamau</div>
+            <div class="role">Photographer</div>
+            <div class="separator"></div>
+            <div class="about-short">Light-led portraiture and cinematic storytelling.<br>Based in Nairobi.</div>
+        </div>
     </div>
-    <button class="close-btn" id="toggleSidebar" aria-label="Toggle sidebar">☰</button>
+    <button class="close-btn" id="closeSidebarBtn" aria-label="Close sidebar">✕</button>
   </aside>
 
   <main id="mainContent">
+    
     <header class="topbar">
       <div class="inner">
-        <div class="brand">VK • PHOTOGRAPHY</div>
-        <nav class="nav-links">
+        <button class="menu-btn" id="openSidebarBtn" aria-label="Open sidebar">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <div class="brand">VK</div> <nav class="nav-links">
           <a href="#hero">Home</a>
           <a href="#about">About</a>
           <a href="#gallery">Gallery</a>
@@ -32,83 +49,146 @@
 
     <section class="hero" id="hero">
       <div class="slides" id="slides">
-        <div class="slide active" data-index="0"><img src="static/images/photo1.jpg" alt="Photo 1"></div>
-        <div class="slide" data-index="1"><img src="static/images/photo2.jpg" alt="Photo 2"></div>
-        <div class="slide" data-index="2"><img src="static/images/photo3.jpg" alt="Photo 3"></div>
-        <div class="slide" data-index="3"><img src="static/images/photo4.jpg" alt="Photo 4"></div>
-        <div class="slide" data-index="4"><img src="static/images/photo5.jpg" alt="Photo 5"></div>
+        <div class="slide active" data-index="0"><img src="static/images/photo1.jpg" alt="Cinematic Portrait 1"></div>
+        <div class="slide" data-index="1"><img src="static/images/photo2.jpg" alt="Cinematic Portrait 2"></div>
+        <div class="slide" data-index="2"><img src="static/images/photo3.jpg" alt="Cinematic Portrait 3"></div>
+        <div class="slide" data-index="3"><img src="static/images/photo4.jpg" alt="Cinematic Portrait 4"></div>
       </div>
 
-      <div class="controls">
-        <button class="btn" id="prevBtn" aria-label="Previous"> 
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 18l-6-6 6-6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <button class="btn" id="nextBtn" aria-label="Next">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 6l6 6-6 6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </div>
-
-      <div class="dots" id="dots"></div>
+      <div class="hero-overlay"></div>
 
       <div class="caption">
         <h1>Victor Kamau</h1>
-        <p>Light is my language. I seek the story in a glance — portraits that breathe.</p>
+        <p class="tagline">Light is my language. I seek the story in a glance.</p>
+      </div>
+
+      <div class="controls-bottom">
+          <button class="nav-arrow" id="prevBtn">←</button>
+          <div class="dots" id="dots"></div>
+          <button class="nav-arrow" id="nextBtn">→</button>
       </div>
     </section>
 
-    <section class="section" id="about">
-      <h2>About</h2>
-      <p>Victor Kamau is a storyteller with a lens, capturing shadows, light, and the quiet poetry between them. This space holds moments where time breathes and emotions unfold.</p>
+    <section class="section text-center" id="about">
+      <h2 class="section-title">The Artist</h2>
+      <p class="lead-text">
+        Victor Kamau is a storyteller with a lens, capturing shadows, light, and the quiet poetry between them. 
+        This space holds moments where time breathes and emotions unfold.
+      </p>
     </section>
 
     <section class="section" id="gallery">
-      <h2>Featured</h2>
-      <div class="gallery-grid">
-        <img src="static/images/photo1.jpg" alt="featured 1">
-        <img src="static/images/photo2.jpg" alt="featured 2">
-        <img src="static/images/photo3.jpg" alt="featured 3">
-        <img src="static/images/photo4.jpg" alt="featured 4">
-        <img src="static/images/photo5.jpg" alt="featured 5">
-        <img src="static/images/photo6.jpg" alt="featured 6">
+      <h2 class="section-title">Selected Works</h2>
+      <div class="gallery-masonry">
+        <div class="masonry-item"><img src="static/images/photo1.jpg" alt="Work 1"></div>
+        <div class="masonry-item"><img src="static/images/photo2.jpg" alt="Work 2"></div>
+        <div class="masonry-item"><img src="static/images/photo3.jpg" alt="Work 3"></div>
+        <div class="masonry-item"><img src="static/images/photo4.jpg" alt="Work 4"></div>
+        <div class="masonry-item"><img src="static/images/photo5.jpg" alt="Work 5"></div>
+        <div class="masonry-item"><img src="static/images/photo6.jpg" alt="Work 6"></div>
       </div>
     </section>
 
     <section class="section" id="contact">
-      <h2>Contact</h2>
-      <div class="contact-form">
-        <form action="/send" method="POST" id="contactForm">
-          <input type="text" name="name" placeholder="Your name" required>
-          <input type="email" name="email" placeholder="Your email" required>
-          <textarea name="message" rows="6" placeholder="Message" required></textarea>
-          <button type="submit">Send Message</button>
-        </form>
+      <div class="contact-wrapper">
+          <div class="contact-info">
+              <h2 class="section-title">Get in Touch</h2>
+              <p>For bookings, prints, or collaborations.</p>
+          </div>
+          <div class="contact-form">
+            <form action="/send" method="POST" id="contactForm">
+              <div class="input-group">
+                  <input type="text" name="name" required>
+                  <label>Name</label>
+              </div>
+              <div class="input-group">
+                  <input type="email" name="email" required>
+                  <label>Email</label>
+              </div>
+              <div class="input-group">
+                  <textarea name="message" rows="4" required></textarea>
+                  <label>Message</label>
+              </div>
+              <button type="submit" class="submit-btn">Send Request</button>
+            </form>
+          </div>
       </div>
     </section>
+
+    <footer>
+        <p>&copy; 2025 Victor Kamau Photography. All rights reserved.</p>
+    </footer>
 
   </main>
 
   <script>
-    // SIDEBAR TOGGLE
+    // --- 1. SIDEBAR & MOBILE MENU LOGIC ---
     const sidebar = document.getElementById('sidebar');
-    const toggle = document.getElementById('toggleSidebar');
+    const openBtn = document.getElementById('openSidebarBtn');
+    const closeBtn = document.getElementById('closeSidebarBtn');
+    const overlay = document.getElementById('sidebarOverlay');
     const main = document.getElementById('mainContent');
-    toggle.addEventListener('click', ()=>{
-      const closed = sidebar.classList.toggle('closed');
-      main.classList.toggle('full', closed);
+    const body = document.body;
+
+    function openMenu() {
+        if (window.innerWidth <= 900) {
+            sidebar.classList.add('open');
+            overlay.classList.add('active');
+        } else {
+            // Desktop: Push content
+            sidebar.classList.remove('closed');
+            main.classList.remove('full');
+            body.classList.remove('sidebar-collapsed');
+            openBtn.style.display = 'none'; // Hide hamburger when sidebar is open
+        }
+    }
+
+    function closeMenu() {
+        if (window.innerWidth <= 900) {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+        } else {
+            // Desktop: Expand content
+            sidebar.classList.add('closed');
+            main.classList.add('full');
+            body.classList.add('sidebar-collapsed');
+            openBtn.style.display = 'flex'; // Show hamburger when sidebar is closed
+        }
+    }
+
+    openBtn.addEventListener('click', openMenu);
+    closeBtn.addEventListener('click', closeMenu);
+    overlay.addEventListener('click', closeMenu); // Click dark background to close
+
+    // Reset layout if window resizes (prevents mobile menu getting stuck on desktop)
+    window.addEventListener('resize', () => {
+        if(window.innerWidth > 900) {
+            overlay.classList.remove('active');
+            sidebar.classList.remove('open');
+        }
     });
 
-    // SLIDESHOW (auto-play + manual + swipe)
+    // --- 2. STICKY NAVBAR LOGIC ---
+    const topbar = document.querySelector('.topbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            topbar.classList.add('scrolled');
+        } else {
+            topbar.classList.remove('scrolled');
+        }
+    });
+
+    // --- 3. SLIDESHOW LOGIC (Standard) ---
     const slides = Array.from(document.querySelectorAll('.slide'));
     const dotsWrap = document.getElementById('dots');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     let index = 0;
     let interval = null;
-    const AUTOPLAY_MS = 4500; // smooth, confident pace
 
     function buildDots(){
       slides.forEach((s,i)=>{
-        const d = document.createElement('div');d.className='dot';d.dataset.index=i;
+        const d = document.createElement('div'); d.className='dot';
         d.addEventListener('click', ()=>goTo(i));
         dotsWrap.appendChild(d);
       })
@@ -129,40 +209,11 @@
     nextBtn.addEventListener('click', ()=>{ next(); resetAutoplay(); });
     prevBtn.addEventListener('click', ()=>{ prev(); resetAutoplay(); });
 
-    // keyboard
-    window.addEventListener('keydown', (e)=>{ if(e.key==='ArrowRight') next(); if(e.key==='ArrowLeft') prev(); });
-
-    // autoplay control
-    function startAutoplay(){ interval = setInterval(next, AUTOPLAY_MS); }
+    function startAutoplay(){ interval = setInterval(next, 5000); }
     function stopAutoplay(){ clearInterval(interval); interval=null; }
     function resetAutoplay(){ stopAutoplay(); startAutoplay(); }
-
-    // pause on hover
-    const hero = document.getElementById('hero');
-    hero.addEventListener('mouseenter', stopAutoplay);
-    hero.addEventListener('mouseleave', startAutoplay);
-
-    // touch swipe
-    let startX = 0; let endX = 0;
-    hero.addEventListener('touchstart', (e)=>{ startX = e.touches[0].clientX; });
-    hero.addEventListener('touchmove', (e)=>{ endX = e.touches[0].clientX; });
-    hero.addEventListener('touchend', ()=>{ if(!endX) return; const delta = endX - startX; if(Math.abs(delta) > 30){ if(delta < 0) next(); else prev(); } startX=endX=0; resetAutoplay(); });
-
-    // init
+    
     buildDots(); startAutoplay();
-
-    // Simple progressive image fallback: if image missing, hide the element (so layout doesn't break)
-    slides.forEach(s=>{
-      const img = s.querySelector('img');
-      img.addEventListener('error', ()=>{ s.style.display='none'; });
-    });
-
-    // Contact form UX: simple client-side feedback — backend handled by Flask route /send
-    const form = document.getElementById('contactForm');
-    form.addEventListener('submit', (e)=>{
-      // Let it submit to the server; optionally disable button to prevent duplicate sends
-      const btn = form.querySelector('button'); btn.disabled = true; btn.textContent = 'Sending...';
-    });
   </script>
 </body>
 </html>

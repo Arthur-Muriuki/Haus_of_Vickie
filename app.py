@@ -4,7 +4,7 @@ import os
 
 app = Flask(__name__)
 
-# --- Email configuration (optional for now) ---
+# --- Email configuration ---
 app.config.update(
     MAIL_SERVER='smtp.gmail.com',
     MAIL_PORT=587,
@@ -15,22 +15,42 @@ app.config.update(
 
 mail = Mail(app)
 
-# --- Routes ---
+# --- Home route ---
 @app.route('/')
 def home():
     return render_template('index.html')
 
-@app.route('/contact', methods=['POST'])
-def contact():
+# --- Contact form handler ---
+@app.route('/send', methods=['POST'])
+def send():
     name = request.form.get('name')
     email = request.form.get('email')
     message = request.form.get('message')
 
-    # For now, just print (we'll wire up email sending later)
-    print(f"📩 New message from {name} ({email}): {message}")
-    return jsonify({"status": "success", "message": "Message sent successfully!"})
+    # Build the email
+    msg = Message(
+        subject=f"New message from {name}",
+        sender=os.getenv('EMAIL_USER'),    # your Gmail
+        recipients=[os.getenv('EMAIL_USER')],
+        body=f"""
+        You have a new message!
 
-# --- Main entry point ---
+        From: {name}
+        Email: {email}
+
+        Message:
+        {message}
+        """
+    )
+
+    try:
+        mail.send(msg)
+        return jsonify({"status": "success", "message": "Message sent successfully!"})
+    except Exception as e:
+        print("❌ Email Error:", e)
+        return jsonify({"status": "error", "message": "Failed to send message"}), 500
+
+# --- Run the app ---
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=True)
