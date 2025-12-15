@@ -24,11 +24,18 @@
             <div class="separator"></div>
             <div class="about-short">Light-led portraiture and cinematic storytelling.<br>Based in Nairobi.</div>
         </div>
+
+        <nav class="sidebar-menu">
+            <a href="#hero" class="side-link">Home</a>
+            <a href="#about" class="side-link">About</a>
+            <a href="#gallery" class="side-link">Gallery</a>
+            <a href="#contact" class="side-link">Contact</a>
+        </nav>
     </div>
     <button class="close-btn" id="closeSidebarBtn" aria-label="Close sidebar">✕</button>
   </aside>
 
-     <header class="topbar">
+  <header class="topbar">
       <div class="inner">
         <button class="menu-btn" id="openSidebarBtn" aria-label="Open sidebar">
             <span class="bar"></span>
@@ -36,18 +43,19 @@
             <span class="bar"></span>
         </button>
 
-        <div class="brand">VK</div> <nav class="nav-links">
+        <div class="brand">VK</div>
+        
+        <nav class="nav-links">
           <a href="#hero">Home</a>
           <a href="#about">About</a>
           <a href="#gallery">Gallery</a>
           <a href="#contact">Contact</a>
         </nav>
       </div>
-    </header>
+  </header>
 
   <main id="mainContent">
     
-
     <section class="hero" id="hero">
       <div class="slides" id="slides">
         <div class="slide active" data-index="0"><img src="static/images/photo1.jpg" alt="Cinematic Portrait 1"></div>
@@ -123,7 +131,7 @@
   </main>
 
   <script>
-    // --- 1. SIDEBAR & MOBILE MENU LOGIC ---
+    // --- 1. SIDEBAR LOGIC ---
     const sidebar = document.getElementById('sidebar');
     const openBtn = document.getElementById('openSidebarBtn');
     const closeBtn = document.getElementById('closeSidebarBtn');
@@ -136,11 +144,9 @@
             sidebar.classList.add('open');
             overlay.classList.add('active');
         } else {
-            // Desktop: Push content
             sidebar.classList.remove('closed');
             main.classList.remove('full');
             body.classList.remove('sidebar-collapsed');
-            openBtn.style.display = 'none'; // Hide hamburger when sidebar is open
         }
     }
 
@@ -149,19 +155,24 @@
             sidebar.classList.remove('open');
             overlay.classList.remove('active');
         } else {
-            // Desktop: Expand content
             sidebar.classList.add('closed');
             main.classList.add('full');
             body.classList.add('sidebar-collapsed');
-            openBtn.style.display = 'flex'; // Show hamburger when sidebar is closed
         }
     }
 
     openBtn.addEventListener('click', openMenu);
     closeBtn.addEventListener('click', closeMenu);
-    overlay.addEventListener('click', closeMenu); // Click dark background to close
+    overlay.addEventListener('click', closeMenu);
 
-    // Reset layout if window resizes (prevents mobile menu getting stuck on desktop)
+    // --- 2. MOBILE LINK CLICK CLOSES MENU ---
+    const sideLinks = document.querySelectorAll('.side-link');
+    sideLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if(window.innerWidth <= 900) closeMenu();
+        });
+    });
+
     window.addEventListener('resize', () => {
         if(window.innerWidth > 900) {
             overlay.classList.remove('active');
@@ -169,7 +180,7 @@
         }
     });
 
-    // --- 2. STICKY NAVBAR LOGIC ---
+    // --- 3. STICKY NAVBAR ---
     const topbar = document.querySelector('.topbar');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
@@ -179,7 +190,7 @@
         }
     });
 
-    // --- 3. SLIDESHOW LOGIC (Standard) ---
+    // --- 4. SLIDESHOW ---
     const slides = Array.from(document.querySelectorAll('.slide'));
     const dotsWrap = document.getElementById('dots');
     const prevBtn = document.getElementById('prevBtn');
